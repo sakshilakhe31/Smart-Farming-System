@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Crop Recommendation</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      /* Farmland background image with cover and fixed */
+      background: url('Images/farmfield.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      color: #fff;
+    }
+
+    .container {
+      text-align: center;
+      padding: 80px 20px 40px;
+      max-width: 500px;
+      margin: 0 auto;
+      /* Glassmorphism effect */
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 2;
+    }
+
+    h2 {
+      color: #dcedc8; /* Light green */
+      font-size: 34px;
+      margin-bottom: 25px;
+      text-shadow: 0 0 5px #2e7d32;
+    }
+
+    form {
+      padding: 25px 20px;
+      border-radius: 15px;
+      /* Transparent background, no separate box since container has glass */
+      background: transparent;
+      box-shadow: none;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      text-align: left;
+      margin: 12px 0 5px;
+      color: #c5e1a5;
+      text-shadow: 0 0 3px #33691e;
+    }
+
+    select, button {
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 10px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.25);
+      color: #1b5e20;
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.4);
+      transition: background-color 0.3s ease;
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
+    }
+
+    select:hover, select:focus {
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    button {
+      background-color: #33691e;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease;
+      text-shadow: 0 0 3px #aed581;
+      box-shadow: 0 4px 10px rgba(51, 105, 30, 0.7);
+    }
+
+    button:hover {
+      background-color: #aed581;
+      color: #1b5e20;
+      box-shadow: 0 6px 15px rgba(174, 213, 129, 0.9);
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #2e7d32cc;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      box-shadow: 0 4px 8px rgba(46, 125, 50, 0.7);
+      transition: background-color 0.3s ease;
+      z-index: 3;
+    }
+
+    .back-btn:hover {
+      background: #aed581cc;
+      color: #1b5e20;
+    }
+
+    .lang-select {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 3;
+    }
+
+    .lang-select select {
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.25);
+      color: #1b5e20;
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
+      outline: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .lang-select select:hover, .lang-select select:focus {
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .quote-box {
+      margin-top: 40px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 18px;
+      border-radius: 16px;
+      color: #dcedc8;
+      font-style: italic;
+      line-height: 1.6;
+      max-width: 450px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      text-shadow: 0 0 5px #33691e;
+      user-select: none;
+    }
+
+    .decor-img {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 200px;
+      opacity: 0.15;
+      z-index: 1;
+    }
+
+    .nav-buttons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .nav-buttons a {
+      padding: 12px 20px;
+      background-color: #33691e;
+      color: white;
+      font-weight: bold;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(51, 105, 30, 0.7);
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #aed581;
+      color: #1b5e20;
+      box-shadow: 0 6px 15px rgba(174, 213, 129, 0.9);
+    }
+
+    @media (max-width: 600px) {
+      .quote-box {
+        display: none;
+      }
+      .container {
+        padding: 40px 10px 20px;
+      }
+      .nav-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+
+
+  <div class="lang-select">
+    <select id="languageSelector" onchange="translateForm()">
+      <option value="en">🌐 English</option>
+      <option value="hi">हिंदी</option>
+      <option value="mr">मराठी</option>
+    </select>
+  </div>
+
+  <img src="https://cdn-icons-png.flaticon.com/512/2909/2909765.png" alt="Crop" class="decor-img" />
+
+  <div class="container">
+    <h2 id="heading">🌾 Smart Crop Recommendation</h2>
+
+    <form action="CropRecommendationServlet" method="post">
+      <label for="soil_type" id="soilLabel">Soil Type</label>
+      <select name="soil_type" required>
+        <option value="">Select Soil Type</option>
+        <option value="Black">Black</option>
+        <option value="Red">Red</option>
+        <option value="Alluvial">Alluvial</option>
+      </select>
+
+      <label for="ph_level" id="phLabel">pH Level</label>
+      <select name="ph_level" required>
+        <option value="">Select pH Level</option>
+        <option value="5.5">5.5</option>
+        <option value="6.0">6.0</option>
+        <option value="6.5">6.5</option>
+        <option value="7.0">7.0</option>
+        <option value="7.5">7.5</option>
+      </select>
+
+      <label for="moisture_level" id="moistureLabel">Moisture Level (%)</label>
+      <select name="moisture_level" required>
+        <option value="">Select Moisture Level</option>
+        <option value="20">20%</option>
+        <option value="25">25%</option>
+        <option value="30">30%</option>
+        <option value="35">35%</option>
+        <option value="40">40%</option>
+      </select>
+
+      <label for="season" id="seasonLabel">Season</label>
+      <select name="season" required>
+        <option value="">Select Season</option>
+        <option value="Summer">Summer</option>
+        <option value="Monsoon">Monsoon</option>
+        <option value="Winter">Winter</option>
+      </select>
+
+      <button type="submit" id="submitBtn">Get Crop Suggestion</button>
+    </form>
+
+    <div class="nav-buttons">
+      <a href="index.html">🏠 Go to Home</a>
+      <a href="dashboard.html">📊 Dashboard</a>
+    </div>
+
+    <p class="quote-box" id="quote">
+      "Agriculture is our wisest pursuit, because it will in the end contribute most to real wealth, good morals, and happiness." – Thomas Jefferson
+    </p>
+  </div>
+
+  <script>
+    function translateForm() {
+      const lang = document.getElementById('languageSelector').value;
+      if (lang === 'hi') {
+        document.getElementById('heading').textContent = '🌾 स्मार्ट फसल अनुशंसा';
+        document.getElementById('soilLabel').textContent = 'मृदा प्रकार';
+        document.getElementById('phLabel').textContent = 'पीएच स्तर';
+        document.getElementById('moistureLabel').textContent = 'आर्द्रता स्तर (%)';
+        document.getElementById('seasonLabel').textContent = 'मौसम';
+        document.getElementById('submitBtn').textContent = 'फसल सुझाव प्राप्त करें';
+        document.getElementById('quote').textContent = 'कृषि हमारी सबसे बुद्धिमान खोज है, क्योंकि यह अंत में असली समृद्धि, अच्छे नैतिकता, और खुशी में योगदान देगा। – थॉमस जेफरसन';
+      } else if (lang === 'mr') {
+        document.getElementById('heading').textContent = '🌾 स्मार्ट पीक शिफारस';
+        document.getElementById('soilLabel').textContent = 'मातीचा प्रकार';
+        document.getElementById('phLabel').textContent = 'पीएच पातळी';
+        document.getElementById('moistureLabel').textContent = 'आर्द्रता पातळी (%)';
+        document.getElementById('seasonLabel').textContent = 'हंगाम';
+        document.getElementById('submitBtn').textContent = 'पीक सूचना मिळवा';
+        document.getElementById('quote').textContent = 'शेती ही आपली सर्वात शहाणी धंदा आहे, कारण ती शेवटी खरी संपत्ती, चांगली नैतिकता आणि आनंदात मोठा वाटा उचलते. – थॉमस जेफरसन';
+      } else {
+        document.getElementById('heading').textContent = '🌾 Smart Crop Recommendation';
+        document.getElementById('soilLabel').textContent = 'Soil Type';
+        document.getElementById('phLabel').textContent = 'pH Level';
+        document.getElementById('moistureLabel').textContent = 'Moisture Level (%)';
+        document.getElementById('seasonLabel').textContent = 'Season';
+        document.getElementById('submitBtn').textContent = 'Get Crop Suggestion';
+        document.getElementById('quote').textContent = '“Agriculture is our wisest pursuit, because it will in the end contribute most to real wealth, good morals, and happiness.” – Thomas Jefferson';
+      }
+    }
+  </script>
+</body>
+</html>

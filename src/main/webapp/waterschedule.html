@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Watering Schedule Entry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('Images/farmfield.jpg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.2); /* Transparent white */
+      padding: 30px 40px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px); /* Frosted glass effect */
+      -webkit-backdrop-filter: blur(10px); /* Safari support */
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 450px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+
+    form {
+      text-align: left;
+    }
+
+    label {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    input, select {
+      padding: 10px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      width: 100%;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    button {
+      background-color: #388e3c;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #2e7d32;
+    }
+
+    .icon {
+      text-align: center;
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    .lang-select {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    select#language {
+      font-size: 15px;
+      padding: 5px;
+      border-radius: 6px;
+    }
+    .nav-buttons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .nav-buttons a {
+      padding: 12px 20px;
+      background-color: #33691e;
+      color: white;
+      font-weight: bold;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(51, 105, 30, 0.7);
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #aed581;
+      color: #1b5e20;
+      box-shadow: 0 6px 15px rgba(174, 213, 129, 0.9);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <div class="icon">💧</div>
+    <h2 id="title">Watering Schedule Entry</h2>
+
+    <div class="lang-select">
+      🌐 <label for="language">Language:</label>
+      <select id="language" onchange="translateForm()">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="mr">मराठी</option>
+      </select>
+   
+    <form action="WaterScheduleServlet" method="post">
+      <label id="label-crop">Crop</label>
+      <select name="crop" required>
+        <option value="">Select Crop</option>
+        <option value="Rice">Rice</option>
+        <option value="Wheat">Wheat</option>
+        <option value="Millets">Millets</option>
+        <option value="Maize">Maize</option>
+      </select>
+
+      <label id="label-frequency">Watering Frequency</label>
+      <select name="frequency" required>
+        <option value="">Select Frequency</option>
+        <option value="1">Once per week</option>
+        <option value="2">Twice per week</option>
+        <option value="3">Thrice per week</option>
+        <option value="7">Daily</option>
+      </select>
+
+      <label id="label-duration">Duration (minutes)</label>
+      <input type="number" name="duration" min="5" max="120" placeholder="e.g., 30" required>
+
+      <label id="label-weather">Weather Condition</label>
+      <select name="weather" required>
+        <option value="">Select Weather</option>
+        <option value="Dry">Dry</option>
+        <option value="Rainy">Rainy</option>
+        <option value="Humid">Humid</option>
+      </select>
+
+      <button type="submit" id="btn-submit">Get Recommendation</button>
+       </form>
+       </div>
+      <div class="nav-buttons">
+      <a href="index.html">🏠 Go to Home</a>
+      <a href="dashboard.html">📊 Dashboard</a>
+       </div>
+   
+  </div>
+
+  <script>
+    const translations = {
+      hi: {
+        title: "सिंचाई अनुसूची प्रविष्टि",
+        crop: "फसल",
+        frequency: "सिंचाई की आवृत्ति",
+        duration: "अवधि (मिनटों में)",
+        weather: "मौसम की स्थिति",
+        submit: "अनुशंसा प्राप्त करें"
+      },
+      mr: {
+        title: "पाणी देण्याची वेळ शिड्यूल",
+        crop: "पिक",
+        frequency: "पाणी देण्याची वारंवारता",
+        duration: "कालावधी (मिनिटात)",
+        weather: "हवामान स्थिती",
+        submit: "शिफारस मिळवा"
+      },
+      en: {
+        title: "Watering Schedule Entry",
+        crop: "Crop",
+        frequency: "Watering Frequency",
+        duration: "Duration (minutes)",
+        weather: "Weather Condition",
+        submit: "Get Recommendation"
+      }
+    };
+
+    function translateForm() {
+      const lang = document.getElementById("language").value;
+      const t = translations[lang];
+      document.getElementById("title").textContent = t.title;
+      document.getElementById("label-crop").textContent = t.crop;
+      document.getElementById("label-frequency").textContent = t.frequency;
+      document.getElementById("label-duration").textContent = t.duration;
+      document.getElementById("label-weather").textContent = t.weather;
+      document.getElementById("btn-submit").textContent = t.submit;
+    }
+  </script>
+
+</body>
+</html>

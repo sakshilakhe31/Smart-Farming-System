@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Farming System 🌱</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff; /* changed to white for better contrast */
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background image */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('Images/farming.jpg') no-repeat center center/cover;
+      filter: brightness(0.75) saturate(1.2);
+      z-index: -1;
+    }
+
+    /* Glassmorphism Container */
+    .glass {
+     background: rgba(0, 0, 0, 0.4); /* darker glass for contrast */
+      border-radius: 15px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 20px;
+      color: #1f3b1f;
+    }
+
+    /* Navigation */
+    nav {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .nav-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    nav .logo {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #2c4a2e;
+      user-select: none;
+      cursor: default;
+      letter-spacing: 1.5px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav ul li a {
+      color: #2c4a2e;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    nav ul li a:hover,
+    nav ul li a:focus {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    /* Main content */
+    main {
+      max-width: 1200px;
+      margin: 60px auto 40px;
+      display: flex;
+      gap: 60px;
+      padding: 0 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Info panel */
+    .info-panel {
+      flex: 1 1 550px;
+    }
+
+    .info-panel h2 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      border-left: 6px solid #4caf50;
+      padding-left: 15px;
+      color: #ffffff; /* white heading */
+    }
+
+    .info-panel p,
+    .info-panel ul {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+       background: rgba(0, 0, 0, 0.2); /* subtle background behind text */
+       color: #ffffff;
+    }
+
+    .info-panel ul {
+      padding-left: 25px;
+    }
+
+    .info-panel ul li {
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    /* Action panel */
+    .action-panel {
+      flex: 0 1 320px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 30px 30px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+
+    .action-panel:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 40px rgba(31, 38, 135, 0.3);
+    }
+
+    .action-panel img {
+      width: 130px;
+      margin-bottom: 25px;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-panel h3 {
+      font-size: 2rem;
+      margin-bottom: 35px;
+    }
+
+    .btn {
+      width: 100%;
+      background-color: #4caf50;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      font-size: 1.25rem;
+      padding: 15px 0;
+      margin-bottom: 20px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #3a7d00;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px 15px;
+      background: rgba(44, 74, 46, 0.85);
+      color: #c7d7b7;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #a5c269;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 600;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Farmer Tips ticker */
+    .tips-container {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 10px 30px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      font-weight: 600;
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+      z-index: 1100;
+    }
+
+    /* Language Dropdown */
+    .translate-container {
+      position: fixed;
+      top: 12px;
+      right: 20px;
+      z-index: 1200;
+    }
+
+    select#languageSwitcher {
+      padding: 6px 12px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.25);
+      color: #2c4a2e;
+      backdrop-filter: blur(5px);
+      transition: background-color 0.3s ease;
+    }
+
+    select#languageSwitcher:hover {
+      background: rgba(255,255,255,0.4);
+    }
+
+    @media (max-width: 900px) {
+      main {
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .info-panel, .action-panel {
+        max-width: 100%;
+      }
+
+      .tips-container {
+        font-size: 1rem;
+        padding: 8px 20px;
+      }
+    }
+
+    /* Screen reader only */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <div class="logo">🌱 Smart Farming</div>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="glass" id="mainContent">
+    <section class="info-panel">
+      <h2>Welcome to the Smart Farming Assistance System</h2>
+      <p>
+        Our project is designed to assist farmers by leveraging technology for better farming outcomes. Through personalized recommendations and insights, we help optimize your agricultural efforts.
+        Empower yourself with smart farming tools and achieve sustainable success.
+      </p>
+      <img src="Images/tool2.jpg" alt="Farming Tools"
+     style="width: 500px; height: 300px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); object-fit: cover; display: block; margin: 20px auto;" />
+
+    </section>
+
+    <section class="action-panel" aria-label="Quick Access Actions">
+      <img src="Images/farmer.png" alt="Smart Farming Logo" />
+      <h3 id="actionTitle">Get Started</h3>
+      <a href="register.html" class="btn" id="registerBtn">Register Now</a>
+      <a href="login.html" class="btn" id="loginBtn">Login</a>
+      
+    </section>
+  </main>
+
+  <div class="tips-container" aria-live="polite" aria-atomic="true" role="region" aria-label="Farmer Tips">
+    <span id="tipText">Loading farming tips...</span>
+  </div>
+
+  <div class="translate-container">
+    <label for="languageSwitcher" class="sr-only">Select Language</label>
+    <select id="languageSwitcher" aria-controls="mainContent" aria-label="Select Language for Interface">
+      <option value="en" selected>English</option>
+      <option value="hi">हिंदी</option>
+      <option value="mr">मराठी</option>
+   
+    </select>
+  </div>
+
+  <footer>
+    &copy; 2025 Smart Farming System.
+    <br />
+    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+  </footer>
+
+  <script>
+    // Farmer Tips Array (multi-language versions)
+    const tips = {
+      en: [
+        "Water your crops early in the morning or late evening to reduce evaporation.",
+        "Rotate crops to maintain soil fertility and reduce pests.",
+        "Use organic manure to improve soil health naturally.",
+        "Monitor weather forecasts regularly to prepare for rains or droughts."
+      ],
+      hi: [
+        "अपने फसलों को सुबह जल्दी या शाम को पानी दें ताकि जलस्राव कम हो।",
+        "मिट्टी की उर्वरता बनाए रखने और कीटों को कम करने के लिए फसल चक्रीकरण करें।",
+        "मिट्टी के स्वास्थ्य को प्राकृतिक रूप से बेहतर बनाने के लिए कार्बनिक खाद का उपयोग करें।",
+        "बारिश या सूखे की तैयारी के लिए मौसम की जानकारी नियमित रूप से देखें।"
+      ],
+      mr: [
+        "पिकांना सकाळी लवकर किंवा संध्याकाळी पाणी द्या ज्यामुळे वाष्पीभवन कमी होईल.",
+        "मातीची सुपीकता टिकवण्यासाठी आणि कीड कमी करण्यासाठी पीक चक्रीकरण करा.",
+        "मातीची गुणवत्ता सुधारण्यासाठी सेंद्रिय खत वापरा.",
+        "पावसाची किंवा दुष्काळाची तयारी करण्यासाठी हवामान अंदाज तपासा."
+      ],
+    };
+
+    let currentTipIndex = 0;
+    const tipTextEl = document.getElementById('tipText');
+    const languageSwitcher = document.getElementById('languageSwitcher');
+
+    // Function to update tip based on selected language and index
+    function updateTip() {
+      const lang = languageSwitcher.value;
+      const langTips = tips[lang] || tips['en'];
+      tipTextEl.textContent = langTips[currentTipIndex];
+      currentTipIndex = (currentTipIndex + 1) % langTips.length;
+    }
+
+    // Rotate tips every 6 seconds
+    setInterval(updateTip, 6000);
+    updateTip();
+
+    // Language switcher for main page text
+    languageSwitcher.addEventListener('change', () => {
+      const lang = languageSwitcher.value;
+
+      const texts = {
+        en: {
+          welcomeTitle: "Welcome to the Smart Farming Assistance System",
+          welcomeText: "Our project is designed to assist farmers by leveraging technology for better farming outcomes. Through personalized recommendations and insights, we help optimize your agricultural efforts.",
+  
+          empowerText: "Empower yourself with smart farming tools and achieve sustainable success.",
+          actionTitle: "Get Started",
+          registerBtn: "Register Now",
+          loginBtn: "Login",
+        },
+        hi: {
+          welcomeTitle: "स्मार्ट फार्मिंग सहायता प्रणाली में आपका स्वागत है",
+          welcomeText: "हमारा प्रोजेक्ट किसानों की मदद के लिए तकनीक का उपयोग करता है ताकि बेहतर खेती परिणाम मिल सकें। व्यक्तिगत सुझावों और जानकारियों के माध्यम से, हम आपकी कृषि प्रयासों को बेहतर बनाते हैं।",
+          listItems: [
+            "समय पर फसल सुझाव प्राप्त करें",
+            "मिट्टी और मौसम की स्थिति की निगरानी करें",
+            "पानी देने के शेड्यूल की योजना बनाएं",
+            "लागत और संभावित लाभ का अनुमान लगाएं"
+          ],
+          empowerText: "स्मार्ट फार्मिंग उपकरणों के साथ खुद को सशक्त बनाएं और सतत सफलता प्राप्त करें।",
+          actionTitle: "शुरू करें",
+          registerBtn: "अब पंजीकरण करें",
+          loginBtn: "लॉगिन करें",
+          dashboardBtn: "डैशबोर्ड"
+        },
+        mr: {
+          welcomeTitle: "स्मार्ट फार्मिंग सहाय्य प्रणालीमध्ये आपले स्वागत आहे",
+          welcomeText: "आमचा प्रकल्प शेतकऱ्यांना मदत करण्यासाठी तंत्रज्ञानाचा वापर करून चांगले शेती परिणाम साधतो. वैयक्तिक शिफारसी आणि माहितीद्वारे, आम्ही तुमच्या कृषी प्रयत्नांना सुधारतो.",
+          listItems: [
+            "वेळेवर पीक शिफारसी मिळवा",
+            "माती आणि हवामानाची स्थिती तपासा",
+            "पाणी देण्याचे वेळापत्रक तयार करा",
+            "खर्च आणि संभाव्य नफा याचा अंदाज लावा"
+          ],
+          empowerText: "स्मार्ट फार्मिंग साधनांसह स्वतःला सशक्त करा आणि टिकाऊ यश मिळवा.",
+          actionTitle: "सुरू करा",
+          registerBtn: "नोंदणी करा",
+          loginBtn: "लॉगिन",
+          dashboardBtn: "डॅशबोर्ड"
+        },
+   
+
+      };
+
+      const t = texts[lang] || texts['en'];
+
+      document.querySelector('.info-panel h2').textContent = t.welcomeTitle;
+      document.querySelector('.info-panel p').textContent = t.welcomeText;
+
+      const ul = document.querySelector('.info-panel ul');
+      ul.innerHTML = '';
+      t.listItems.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+
+      // Last paragraph
+      if(document.querySelectorAll('.info-panel p').length < 2) {
+        const p = document.createElement('p');
+        document.querySelector('.info-panel').appendChild(p);
+      }
+      document.querySelectorAll('.info-panel p')[1].textContent = t.empowerText;
+
+      document.getElementById('actionTitle').textContent = t.actionTitle;
+      document.getElementById('registerBtn').textContent = t.registerBtn;
+      document.getElementById('loginBtn').textContent = t.loginBtn;
+   
+    });
+
+  </script>
+
+</body>
+</html>

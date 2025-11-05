@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Farming Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: url('Images/farming.jpg') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      color: #ccffcc;
+    }
+
+    .dashboard {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      margin: 20px auto 40px auto;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+
+    header {
+      text-align: center;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      z-index: 20;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      text-shadow: 0 0 10px #228B22aa;
+      color: #e0ffe0;
+    }
+
+    .language-select {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 30;
+    }
+
+    .language-select select {
+      padding: 8px 14px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      background: #e0ffe0;
+      color: #228B22;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .language-select select:hover {
+      background-color: #c0f0c0;
+    }
+
+    nav.top-nav {
+      position: fixed;
+      top: 15px;
+      left: 20px;
+      z-index: 30;
+    }
+
+    nav.top-nav a {
+      margin-right: 18px;
+      text-decoration: none;
+      padding: 8px 16px;
+      background: #e0ffe0;
+      color: #228B22;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 10px #228B22aa;
+    }
+
+    nav.top-nav a:hover {
+      background-color: #c0f0c0;
+      color: #000;
+    }
+
+    .button {
+      background-color: rgba(0, 0, 0, 0.3); /* darker hover */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 2px solid rgba(34, 139, 34, 0.7);
+      color: #e0ffe0;
+      padding: 25px 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      border-radius: 15px;
+      transition: all 0.3s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 230px;
+      text-decoration: none;
+      box-shadow: 0 0 15px rgba(34, 139, 34, 0.6);
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .button img {
+      width: 70px;
+      height: 70px;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 3px rgba(0,0,0,0.6));
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .button:hover {
+      background-color: rgba(192, 240, 192, 0.85);
+      color: #000;
+      transform: scale(1.12);
+      box-shadow: 0 0 30px rgba(34, 139, 34, 1);
+    }
+
+    .button:hover img {
+      transform: rotate(10deg) scale(1.3);
+      filter: drop-shadow(0 0 6px rgba(0,0,0,0.8));
+    }
+
+    .widgets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+      width: 100%;
+      max-width: 1200px;
+      margin: 30px auto 40px auto;
+      
+    }
+
+    .widget {
+      border-radius: 15px;
+      box-shadow: 0 0 12px rgba(34,139,34,0.6);
+      padding: 20px 25px;
+      width: 280px;
+      min-height: 150px;
+      color: #ccffcc;
+      font-weight: 600;
+      position: relative;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      user-select: none;
+      transition: transform 0.3s ease;
+      background-color: rgba(0, 0, 0, 0.4); /* semi-transparent dark */
+    }
+
+    .widget:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(50, 205, 50, 0.9);
+    }
+
+    .widget h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px #0f5a0f;
+      font-size: 1.3rem;
+      color: #ffffff;
+    }
+
+    .widget .content {
+      font-size: 1.15rem;
+      line-height: 1.4;
+      color: white;
+      min-height: 80px;
+    }
+
+    @media (max-width: 700px) {
+      .button, .widget {
+        width: 90vw;
+        max-width: 320px;
+      }
+      .widgets {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    .quote-box {
+      margin-top: 10px;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-align: center;
+      color: #e0ffe0;
+      animation: fadeInQuote 4s ease-in-out infinite alternate;
+      text-shadow: 0 0 6px #006400;
+    }
+
+    @keyframes fadeInQuote {
+      0% {
+        opacity: 0.3;
+        transform: translateY(5px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(-5px);
+      }
+    }
+
+    .background-blur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('Images/farmfield.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(8px);
+      z-index: 0;
+    }
+
+    body {
+      position: relative;
+      z-index: 1;
+    }
+    .dark-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* dark overlay */
+  z-index: 1;
+}
+  </style>
+</head>
+<body>
+
+  <div class="dark-overlay"></div>
+  <div class="background-blur"></div>
+
+  <!-- Language Selector -->
+  <div class="language-select">
+    <select id="language" aria-label="Select Language">
+      <option value="en" selected>English</option>
+      <option value="hi">हिंदी</option>
+      <option value="mr">मराठी</option>
+    </select>
+  </div>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <a href="about.html" id="nav-about">About</a>
+    <a href="contact.html" id="nav-contact">Contact Us</a>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1 id="dashboard-title">Smart Farming Dashboard</h1>
+    <div>
+      <p class="quote-box">
+        🌾 “Smart farming is not just a technique, it's the future of agriculture.” 🌱
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Buttons -->
+  <div class="dashboard">
+    <a href="login.html" class="button" id="btn-login">
+      <img src="Images/loginicon.jpg" alt="Login Icon" />
+      <span>Login</span>
+    </a>
+    <a href="croprecommendation.html" class="button" id="btn-crop">
+      <img src="Images/crop.png" alt="Crop Recommendation Icon" />
+      <span>Crop Recommendation</span>
+    </a>
+    <a href="waterschedule.html" class="button" id="btn-water">
+      <img src="Images/irrigation.png" alt="Watering Schedule Icon" />
+      <span>Watering Schedule</span>
+    </a>
+    <a href="costestimation.html" class="button" id="btn-cost">
+      <img src="Images/cost.png" alt="Cost Estimation Icon" />
+      <span>Cost Estimation</span>
+    </a>
+    <a href="weather.html" class="button" id="btn-weather">
+      <img src="Images/weather.png" alt="Weather Icon" />
+      <span>Weather Forecast</span>
+    </a>
+  </div>
+
+  <!-- Widgets -->
+  <div class="widgets">
+    <div class="widget" id="soil-widget">
+      <h3 id="soil-title">Soil Moisture Status</h3>
+      <div class="content" id="soil-content">
+        Moisture Level: <strong>Good</strong><br />
+        Status: Optimal for irrigation
+      </div>
+    </div>
+
+    <div class="widget" id="watering-widget">
+      <h3 id="watering-title">Watering Schedule</h3>
+      <div class="content" id="watering-content">
+        Next watering: <strong>Tomorrow, 6:00 AM</strong><br />
+        Frequency: Every 2 days
+      </div>
+    </div>
+
+    <div class="widget" id="market-widget">
+      <h3 id="market-title">Market Price Updates</h3>
+      <div class="content" id="market-content">
+        Wheat: ₹2200/quintal<br />
+        Rice: ₹2500/quintal<br />
+        Maize: ₹1800/quintal
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us - Smart Farming System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header {
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 40px;
+      animation: blink 2s linear infinite;
+      color: #00ff99;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    form {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 25px 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(6px);
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    input, textarea {
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+      color: #000;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #555;
+    }
+
+    button {
+      padding: 12px;
+      background-color: #00ff99;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #000;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00cc7a;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: auto;
+      padding: 15px;
+      font-size: 14px;
+      color: #ccc;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="header">Contact Us</div>
+
+    <form action="submit_contact.jsp" method="post">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="text" name="subject" placeholder="Subject" required>
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+    <footer>
+      &copy; 2025 Smart Farming System | Developed with care for farmers
+    </footer>
+  </div>
+</body>
+</html>
